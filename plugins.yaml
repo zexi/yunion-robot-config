@@ -1,0 +1,25 @@
+plugins:
+  yunionio:
+  - approve
+  - lgtm
+  - wip
+  - size
+  - assign
+  - trigger
+
+approve:
+- repos:
+  - yunionio/onecloud
+  - yunionio/yunion-dummy-gateway
+  - yunionio/sdnagent
+  - yunionio/log
+  - yunionio/sqlchemy
+  - yunionio/pkg
+  - yunionio/mcclient_java
+  - yunionio/python_yunionsdk
+  - yunionio/yunionos
+  - yunionio/jsonutils
+  - yunionio/yke
+  - yunionio/structarg
+  - yunionio/telegraf
+  require_self_approval: true

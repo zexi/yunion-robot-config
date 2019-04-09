@@ -1,0 +1,107 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: default
+  name: cherrypicker
+  labels:
+    app: cherrypicker
+spec:
+  replicas: 1 # Do not scale up.
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: cherrypicker
+    spec:
+      serviceAccountName: "cherrypicker"
+      containers:
+      - name: cherrypicker
+        image: registry.cn-beijing.aliyuncs.com/yunionio/cherrypicker:latest
+        imagePullPolicy: Always
+        command: ["/cherrypicker"]
+        args:
+        - -dry-run=false
+        ports:
+          - name: http
+            containerPort: 8888
+        volumeMounts:
+        - name: hmac
+          mountPath: /etc/webhook
+          readOnly: true
+        - name: oauth
+          mountPath: /etc/github
+          readOnly: true
+        - name: config
+          mountPath: /etc/config
+          readOnly: true
+      volumes:
+      - name: hmac
+        secret:
+          secretName: hmac-token
+      - name: oauth
+        secret:
+          secretName: oauth-token
+      - name: config
+        configMap:
+          name: config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: cherrypicker
+spec:
+  selector:
+    app: cherrypicker
+  ports:
+  - port: 8888
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: default
+  name: cherrypicker-ing
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /cherrypicker
+        backend:
+          serviceName: cherrypicker
+          servicePort: 8888
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: default
+  name: "cherrypicker"
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  namespace: default
+  name: "cherrypicker"
+rules:
+  - apiGroups:
+      - "prow.k8s.io"
+    resources:
+      - prowjobs
+    verbs:
+      - create
+      - list
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  namespace: default
+  name: "cherrypicker"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: "cherrypicker"
+subjects:
+- kind: ServiceAccount
+  name: "cherrypicker"

@@ -1,0 +1,55 @@
+tide:
+  merge_method:
+    yunionio: squash
+
+  target_url: http://118.187.65.235:8080/tide.html
+
+  queries:
+  - orgs:
+    - yunionio
+    labels:
+    - lgtm
+    - approved
+    missingLabels:
+    - needs-work
+    - do-not-merge
+    - do-not-merge/hold
+    - do-not-merge/work-in-progress
+    - needs-rebase
+
+  context_options:
+    # Use branch protection options to define required and optional contexts
+    from-branch-protection: true
+    # Treat unknown contexts as optional
+    skip-unknown-contexts: true
+    orgs:
+      org:
+        required-contexts:
+        - "check-required-for-all-repos"
+        repos:
+          repo:
+            required-contexts:
+             - "check-required-for-all-branches"
+            branches:
+              branch:
+                from-branch-protection: false
+                required-contexts:
+                - "required_test"
+                optional-contexts:
+                - "optional_test"
+
+#presubmits:
+  #yunionio/onecloud:
+  #- name: unit-tests         # As for periodics.
+    #always_run: true         # Run for every PR, or only when requested.
+    #skip_report: false       # Whether to skip setting a status on GitHub.
+    #context: unit-tests      # Status context. Usually the job name.
+    #max_concurrency: 10      # As for postsubmits.
+    #agent: kubernetes        # As for periodics.
+    #spec:
+      #containers:
+      #- image: alpine
+        #command:
+        #- printenv
+    #trigger: "(?m)^/test this"
+    #rerun_command: "/test this"
