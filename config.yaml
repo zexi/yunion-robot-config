@@ -1,6 +1,6 @@
 tide:
   merge_method:
-    yunionio: squash
+    yunionio: merge
 
   target_url: http://118.187.65.235:8080/tide.html
 
@@ -15,6 +15,7 @@ tide:
     - do-not-merge
     - do-not-merge/hold
     - do-not-merge/work-in-progress
+    - do-not-merge/contains-merge-commits
     - needs-rebase
 
   context_options:
@@ -38,6 +39,17 @@ tide:
                 optional-contexts:
                 - "optional_test"
 
+#plank:
+  #pod_pending_timeout: 60m
+  #default_decoration_config:
+    #timeout: 7200000000000 # 2h
+    #grace_period: 15000000000 # 15s
+    #utility_images:
+      #clonerefs: "registry.cn-beijing.aliyuncs.com/yunionio/clonerefs:v20190411-f81d8b1a0"
+      #initupload: "registry.cn-beijing.aliyuncs.com/yunionio/initupload:v20190411-f81d8b1a0"
+      #entrypoint: "registry.cn-beijing.aliyuncs.com/yunionio/entrypoint:v20190411-f81d8b1a0"
+      #sidecar: "registry.cn-beijing.aliyuncs.com/yunionio/sidecar:v20190411-f81d8b1a0"
+
 #presubmits:
   #yunionio/onecloud:
   #- name: unit-tests         # As for periodics.
@@ -46,10 +58,16 @@ tide:
     #context: unit-tests      # Status context. Usually the job name.
     #max_concurrency: 10      # As for postsubmits.
     #agent: kubernetes        # As for periodics.
+    #namespace: prowjob
+    #decorate: true
+    #path_alias: yunionio.io/x/onecloud
     #spec:
+      #hostNetwork: true
       #containers:
-      #- image: alpine
+      #- image: registry.cn-beijing.aliyuncs.com/yunionio/d3lx-golang:yunion
         #command:
-        #- printenv
+        #- make
+        #args:
+        #- test
     #trigger: "(?m)^/test this"
     #rerun_command: "/test this"

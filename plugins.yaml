@@ -1,11 +1,16 @@
 plugins:
   yunionio:
   - approve
+  - help
+  - hold
   - lgtm
   - wip
   - size
   - assign
   - trigger
+  - lifecycle # Lets PRs & issues be flagged as stale
+  - label
+  - blunderbuss
 
 approve:
 - repos:
