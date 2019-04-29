@@ -11,6 +11,7 @@ plugins:
   - lifecycle # Lets PRs & issues be flagged as stale
   - label
   - blunderbuss
+  - require_matching_label
 
 approve:
 - repos:
@@ -28,3 +29,11 @@ approve:
   - yunionio/structarg
   - yunionio/telegraf
   require_self_approval: true
+
+require_matching_label:
+- org: "yunionio"
+  repo: "onecloud"
+  prs: true
+  issues: true
+  regexp: "^(area)/"
+  missing_label: "needs-area"
