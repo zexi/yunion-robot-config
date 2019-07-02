@@ -39,16 +39,37 @@ tide:
                 optional-contexts:
                 - "optional_test"
 
-#plank:
-  #pod_pending_timeout: 60m
-  #default_decoration_config:
-    #timeout: 7200000000000 # 2h
-    #grace_period: 15000000000 # 15s
-    #utility_images:
-      #clonerefs: "registry.cn-beijing.aliyuncs.com/yunionio/clonerefs:v20190411-f81d8b1a0"
-      #initupload: "registry.cn-beijing.aliyuncs.com/yunionio/initupload:v20190411-f81d8b1a0"
-      #entrypoint: "registry.cn-beijing.aliyuncs.com/yunionio/entrypoint:v20190411-f81d8b1a0"
-      #sidecar: "registry.cn-beijing.aliyuncs.com/yunionio/sidecar:v20190411-f81d8b1a0"
+plank:
+  pod_pending_timeout: 60m
+  default_decoration_config:
+    timeout: 7200000000000 # 2h
+    grace_period: 15000000000 # 15s
+    utility_images:
+      clonerefs: "registry.cn-beijing.aliyuncs.com/yunionio/clonerefs:v20190411-f81d8b1a0"
+      initupload: "registry.cn-beijing.aliyuncs.com/yunionio/initupload:v20190411-f81d8b1a0"
+      entrypoint: "registry.cn-beijing.aliyuncs.com/yunionio/entrypoint:v20190411-f81d8b1a0"
+      sidecar: "registry.cn-beijing.aliyuncs.com/yunionio/sidecar:v20190411-f81d8b1a0"
+    gcs_configuration:
+      bucket: <bucket-name>
+      path_strategy: explicit # or `legacy`, `single`
+      default_org: yunionio
+      default_repo: onecloud
+    gcs_credentials_secret: <secret-name> # the name of the secret that stores the GCP service account credential JSON file, it expects the secret's key to
+
+#periodics:
+#- name: foo-job
+  #decorate: true
+  #path_alias: /go/src/yunion.io/x/onecloud
+  #clone_uri: https://github.com/yunionio/onecloud
+  #interval: 1m
+  #spec:
+    #containers:
+      #- image: yunionio/onecloud-ci:latest
+        #imagePullPolicy: Always
+        #command:
+        #- "echo"
+        #args:
+        #- "The dir is $(PWD)"
 
 #presubmits:
   #yunionio/onecloud:
