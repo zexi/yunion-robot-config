@@ -401,6 +401,8 @@ kind: Ingress
 metadata:
   namespace: default
   name: ing
+  annotations:
+    "loadbalancer.yunion.io/network": fb37ab66-e0a1-4c50-8d33-93d7e8b72670
 spec:
   rules:
   - http:

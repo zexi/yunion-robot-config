@@ -14,32 +14,34 @@ plugins:
   - require-matching-label
   #- mergecommitblocker
 
-  label:
-    additional_labels:
-    - needs-backport
-    - needs-work
+label:
+  additional_labels:
+  - needs-backport
+  - needs-work
 
-  approve:
-  - repos:
-    - yunionio/onecloud
-    - yunionio/yunion-dummy-gateway
-    - yunionio/sdnagent
-    - yunionio/log
-    - yunionio/sqlchemy
-    - yunionio/pkg
-    - yunionio/mcclient_java
-    - yunionio/python_yunionsdk
-    - yunionio/yunionos
-    - yunionio/jsonutils
-    - yunionio/yke
-    - yunionio/structarg
-    - yunionio/telegraf
-    require_self_approval: true
+approve:
+- repos:
+  - yunionio/onecloud
+  - yunionio/yunion-dummy-gateway
+  - yunionio/sdnagent
+  - yunionio/log
+  - yunionio/sqlchemy
+  - yunionio/pkg
+  - yunionio/mcclient_java
+  - yunionio/python_yunionsdk
+  - yunionio/yunionos
+  - yunionio/jsonutils
+  - yunionio/yke
+  - yunionio/structarg
+  - yunionio/telegraf
+  - yunionio/docs
+  - yunionio/service-images
+  require_self_approval: true
 
-  require_matching_label:
-  - org: "yunionio"
-    repo: "onecloud"
-    prs: true
-    issues: true
-    regexp: "^(area)/"
-    missing_label: "needs-area"
+require_matching_label:
+- org: "yunionio"
+  repo: "onecloud"
+  prs: true
+  issues: true
+  regexp: "^(area)/"
+  missing_label: "needs-area"
