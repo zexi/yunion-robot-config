@@ -36,6 +36,8 @@ approve:
   - yunionio/telegraf
   - yunionio/docs
   - yunionio/service-images
+  - yunionio/ocadm
+  - yunionio/onecloud-operator
   require_self_approval: true
 
 require_matching_label:
@@ -45,3 +47,4 @@ require_matching_label:
   issues: true
   regexp: "^(area)/"
   missing_label: "needs-area"
+  branch: master
